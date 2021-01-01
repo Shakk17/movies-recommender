@@ -1,0 +1,16 @@
+version: "3.7"
+   
+services:
+  server:
+    build: server
+    command: python server.py
+    volumes:
+      - ./server/src:/code
+    ports:
+      - 5000:5000
+    env_file:
+      - server/.env
+
+
+x-disabled:
+

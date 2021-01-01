@@ -1,0 +1,12 @@
+bs4
+colorama
+Flask
+sklearn
+pandas
+psycopg2
+requests
+scrapy
+sqlalchemy
+xgboost
+
+gunicorn
