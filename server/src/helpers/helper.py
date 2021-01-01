@@ -11,7 +11,7 @@ from helpers.printer import green
 def refine_db():
     # Get data from IMDb database.
     engine = db_connect()
-    print("Refining database...")
+    logging.warning("Refining database...")
     imdb_series_df = pd.read_sql_query('SELECT * FROM imdb', con=engine, index_col="id")
 
     # Get a list of all the possible genres.
@@ -26,7 +26,7 @@ def refine_db():
     imdb_series_df = imdb_series_df.drop(columns=["genres"])
 
     # Export the dataframe to the database.
-    print("Saving database to imdb table.")
+    logging.warning("Saving database to imdb table.")
     imdb_series_df.to_sql('imdb', engine, if_exists='replace')
 
 
@@ -40,13 +40,13 @@ def update_my_ratings():
     # Add ratings for movies not yet rated.
     movielens_ratings_df['rating'] = movielens_ratings_df['rating'].map(lambda x: x*2)
     movielens_ratings_df['average_rating'] = movielens_ratings_df['average_rating'].map(lambda x: round(x*2, 2))
-    movielens_ratings_df['imdb_id'] = movielens_ratings_df['imdb_id'].map(lambda x: 'tt' + str(x))
     movielens_ratings_df.set_index('imdb_id', inplace=True)
 
     # Export the dataframe to the database.
     engine = db_connect()
     logging.warning("Saving database to my_ratings table.")
     movielens_ratings_df.to_sql('my_ratings', engine, if_exists='replace')
+    logging.warning('Database updated!')
 
 
 def show_predictions():
@@ -61,7 +61,7 @@ def show_predictions():
     stringa = '<table>' \
               '<tr><th>prediction</th><th>title</th></tr>'
     for i, row in imdb_series_df.iloc[0:10, :].iterrows():
-        link = f'https://www.imdb.com/title/{i}/'
+        link = f'https://www.imdb.com/title/{row["url"]}/'
         stringa += f'<tr>' \
                    f'<td width=5%><b>{row["prediction"]:.2f}</b></td>' \
                    f'<td width=20%><b><a href="{link}" target="_blank">{row["name"]}</a></b></td>' \

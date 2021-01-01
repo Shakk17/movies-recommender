@@ -1,6 +1,6 @@
 from sqlalchemy.orm import sessionmaker
 
-from crawler.models import db_connect, create_table, TvSeries
+from crawler.models import db_connect, create_table, Movie
 from helpers.printer import green, blue
 
 from time import time
@@ -28,43 +28,44 @@ class ImdbCrawlerPipeline:
         """
         session = self.Session()
 
-        tv_series = TvSeries()
-        tv_series.id = item["id"]
-        tv_series.name = item["name"]
-        tv_series.genres = item["genres"]
-        tv_series.overview = item['overview']
-        tv_series.year = item["year"]
-        tv_series.length = item["length"]
-        tv_series.popularity_rank = item["popularity_rank"]
-        tv_series.n_ratings = item["n_ratings"]
-        tv_series.rating_avg = item["rating_avg"]
-        tv_series.rating_top1000 = item["rating_top1000"]
-        tv_series.rating_us = item["rating_us"]
-        tv_series.rating_row = item["rating_row"]
-        tv_series.rating_M = item["rating_M"]
-        tv_series.rating_F = item["rating_F"]
-        tv_series.rating_0to18 = item["rating_0to18"]
-        tv_series.rating_M_0to18 = item["rating_M_0to18"]
-        tv_series.rating_F_0to18 = item["rating_F_0to18"]
-        tv_series.rating_18to29 = item["rating_18to29"]
-        tv_series.rating_M_18to29 = item["rating_M_18to29"]
-        tv_series.rating_F_18to29 = item["rating_F_18to29"]
-        tv_series.rating_29to45 = item["rating_29to45"]
-        tv_series.rating_M_29to45 = item["rating_M_29to45"]
-        tv_series.rating_F_29to45 = item["rating_F_29to45"]
-        tv_series.rating_45to100 = item["rating_45to100"]
-        tv_series.rating_M_45to100 = item["rating_M_45to100"]
-        tv_series.rating_F_45to100 = item["rating_F_45to100"]
-        tv_series.poster = item['poster']
-        tv_series.prediction = None
+        movie = Movie()
+        movie.id = item["id"]
+        movie.url = item['url']
+        movie.name = item["name"]
+        movie.genres = item["genres"]
+        movie.overview = item['overview']
+        movie.year = item["year"]
+        movie.length = item["length"]
+        movie.popularity_rank = item["popularity_rank"]
+        movie.n_ratings = item["n_ratings"]
+        movie.rating_avg = item["rating_avg"]
+        movie.rating_top1000 = item["rating_top1000"]
+        movie.rating_us = item["rating_us"]
+        movie.rating_row = item["rating_row"]
+        movie.rating_M = item["rating_M"]
+        movie.rating_F = item["rating_F"]
+        movie.rating_0to18 = item["rating_0to18"]
+        movie.rating_M_0to18 = item["rating_M_0to18"]
+        movie.rating_F_0to18 = item["rating_F_0to18"]
+        movie.rating_18to29 = item["rating_18to29"]
+        movie.rating_M_18to29 = item["rating_M_18to29"]
+        movie.rating_F_18to29 = item["rating_F_18to29"]
+        movie.rating_29to45 = item["rating_29to45"]
+        movie.rating_M_29to45 = item["rating_M_29to45"]
+        movie.rating_F_29to45 = item["rating_F_29to45"]
+        movie.rating_45to100 = item["rating_45to100"]
+        movie.rating_M_45to100 = item["rating_M_45to100"]
+        movie.rating_F_45to100 = item["rating_F_45to100"]
+        movie.poster = item['poster']
+        movie.prediction = None
 
         try:
-            session.add(tv_series)
+            session.add(movie)
             session.commit()
             spider.items += 1
             per = spider.items / spider.tot_items * 100
             per_string = green(f"[{per:.1f}%]")
-            logging.warning(f"{per_string} {spider.items} {tv_series.name}")
+            logging.warning(f"{per_string} {spider.items} {movie.name}")
             # Print speed every 100 items.
             if spider.items % 50 == 0:
                 speed = 50 / (time() - spider.time)

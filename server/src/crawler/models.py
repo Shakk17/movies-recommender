@@ -28,10 +28,11 @@ def create_table(engine):
     Base.metadata.create_all(engine)
 
 
-class TvSeries(Base):
+class Movie(Base):
     __tablename__ = "imdb"
 
-    id = Column(String, primary_key=True)
+    id = Column(Integer, primary_key=True)
+    url = Column(String)
     name = Column('name', String)
     genres = Column('genres', String)
     overview = Column(String)

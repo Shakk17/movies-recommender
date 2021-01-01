@@ -10,6 +10,7 @@ from scrapy import Item, Field
 
 class ImdbItem(Item):
     id = Field()
+    url = Field()
     name = Field()
     genres = Field()
     overview = Field()

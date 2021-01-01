@@ -15,7 +15,8 @@ class PageScraper:
         for div in divs:
             tv_series_item = ImdbItem()
             tv_series_item["name"] = div.find('a').text
-            tv_series_item["id"] = div.find('a')["href"].split('/')[2]
+            tv_series_item["url"] = div.find('a')["href"].split('/')[2]
+            tv_series_item["id"] = int(div.find('a')["href"].split('/')[2][2:])
 
             tv_series_item["rating_avg"] = div.find("strong").text
             infos.append(tv_series_item)

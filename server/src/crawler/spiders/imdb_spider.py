@@ -30,7 +30,7 @@ class ImdbSpider(scrapy.Spider):
 
         items, self.tot_items = scraper.get_all_movies_items()
         for item in items:
-            url = f"/title/{item['id']}/"
+            url = f"/title/{item['url']}/"
             yield response.follow(url, callback=self.parse_movie, meta={"movie_item": item})
 
         next_page = scraper.get_next_page()
