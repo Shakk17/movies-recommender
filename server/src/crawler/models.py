@@ -35,6 +35,7 @@ class Movie(Base):
     url = Column(String)
     name = Column('name', String)
     genres = Column('genres', String)
+    country = Column(String)
     overview = Column(String)
     year = Column(Integer)
     length = Column(Integer)

@@ -39,6 +39,9 @@ class MovieScraper:
         # N_RATINGS
         item["n_ratings"] = self.html.find("div", {"class": "imdbRating"}).find('a').text.replace(',', '')
 
+        # COUNTRY
+        item['country'] = self.html.find('div', {'id': 'titleDetails'}).find_all('div')[1].find('a').text
+
         # POSTER
         poster_url = self.html.find('div', {'class': 'poster'}).find('img')['src'].split('@._V1_')[0]
         item['poster'] = poster_url + '@._V1_'

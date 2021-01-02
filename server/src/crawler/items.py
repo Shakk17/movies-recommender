@@ -13,6 +13,7 @@ class ImdbItem(Item):
     url = Field()
     name = Field()
     genres = Field()
+    country = Field()
     overview = Field()
     year = Field()
     length = Field()

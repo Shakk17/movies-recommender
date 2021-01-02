@@ -26,6 +26,9 @@ class ImdbCrawlerPipeline:
         """
         This method is called for every item pipeline component
         """
+        if item['country'] in ['Hindi', 'India']:
+            return item
+
         session = self.Session()
 
         movie = Movie()
@@ -34,6 +37,7 @@ class ImdbCrawlerPipeline:
         movie.name = item["name"]
         movie.genres = item["genres"]
         movie.overview = item['overview']
+        movie.country = item['country']
         movie.year = item["year"]
         movie.length = item["length"]
         movie.popularity_rank = item["popularity_rank"]
