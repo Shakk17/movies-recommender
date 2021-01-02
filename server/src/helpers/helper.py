@@ -33,11 +33,11 @@ def refine_db():
 def update_my_ratings():
     # Read movielens-ratings.csv from Google Drive.
     dwn_url = 'https://drive.google.com/uc?export=download&id='
-    id_user_show = '1dbwkzuvl1AujnQNJkL3w5Km1hd-35YCm'
+    id_user_show = '1bJooXf85xiUV-I3a_kO3fJFlGNryTxef'
     movielens_ratings_df = pd.read_csv(StringIO(requests.get(dwn_url + id_user_show).text))
 
     logging.warning("Downloaded ratings from Google Drive.")
-    # Add ratings for movies not yet rated.
+    
     movielens_ratings_df['rating'] = movielens_ratings_df['rating'].map(lambda x: x*2)
     movielens_ratings_df['average_rating'] = movielens_ratings_df['average_rating'].map(lambda x: round(x*2, 2))
     movielens_ratings_df.set_index('imdb_id', inplace=True)
